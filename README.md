@@ -1,34 +1,50 @@
 # kxkm_Ve.direct
 
 ## Description
-Ce projet utilise M5 Stack pour écrire les champs Victron Energy MPPT dans InfluxDB sur le Cloud en utilisant la bibliothèque VeDirectFrameHandler. Il a été testé sur une installation solaire/plomb autonome et monitorée à distance.
+Ce projet permet de lire les données des champs Victron Energy MPPT et de les envoyer vers InfluxDB sur le Cloud. Il est basé sur M5 Stack et utilise la bibliothèque VeDirectFrameHandler.
+
+## Fonctionnalités
+- Connexion WiFi et maintien de la connexion
+- Connexion à AWS et maintien de la connexion
+- Connexion à Home Assistant et maintien de la connexion
+- Connexion à InfluxDB et maintien de la connexion
+- Mise à jour de l'affichage
+- Mesure de la consommation électrique
+- Synchronisation de l'heure avec un serveur NTP
+- Mise à jour de la force du signal WiFi
+
+## Prérequis
+- M5 Stack
+- Bibliothèque VeDirectFrameHandler
+- Compte InfluxDB
+- Compte AWS (si utilisé)
+- Home Assistant (si utilisé)
+
+## Installation
+1. Clonez le dépôt :
+    ```sh
+    git clone https://github.com/mk4001/VE.Direct2InfluxDB-2.0.git
+    ```
+2. Ouvrez le projet dans votre IDE Arduino ou PlatformIO.
+3. Installez les bibliothèques nécessaires :
+    - Arduino
+    - M5Stack
+    - EmonLib
+    - VeDirectFrameHandler
+    - WiFi
+
+## Configuration
+Modifiez le fichier `config/config.h` pour configurer les paramètres de votre réseau WiFi, AWS, Home Assistant et InfluxDB.
+
+## Utilisation
+1. Téléversez le code sur votre M5 Stack.
+2. Ouvrez le moniteur série pour vérifier les connexions et les mesures.
 
 ## Auteur
 Clément Saillant
 
 ## Licence
-GNU General Public License
+Ce projet est sous licence GNU General Public License v3.0. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Installation
-1. Cloner le dépôt GitHub.
-   ```bash
-   git clone <URL_DU_DEPOT>
-   ```
-2. Ouvrir le projet avec PlatformIO.
-
-## Configuration
-Modifier le fichier `platformio.ini` pour configurer les dépendances et les paramètres de construction.
-
-## Utilisation
-1. Configurer les paramètres WiFi et InfluxDB dans le fichier `src/main.cpp`.
-2. Compiler et téléverser le code sur l'appareil M5 Stack.
-3. Surveiller les données envoyées à InfluxDB.
-
-## Dépendances
-- [EmonLib-esp32](https://github.com/Savjee/EmonLib-esp32.git)
-- [VeDirectFrameHandler](https://github.com/MartinVerges/VeDirectFrameHandler.git)
-- [InfluxDB-Client-for-Arduino](https://github.com/tobiasschuerg/InfluxDB-Client-for-Arduino.git)
-- [M5Stack](https://github.com/m5stack/M5Stack)
-
-## Remerciements
-Komplex Kapharnaum pour le soutien et les ressources fournies pour ce projet.
+## Références
+- [VE.Direct2InfluxDB-2.0](https://github.com/mk4001/VE.Direct2InfluxDB-2.0)
