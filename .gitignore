@@ -3,3 +3,8 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+
+# Private credentials — never commit
+src/credentials.h
+**/credentials.h
+!**/credentials.h.example

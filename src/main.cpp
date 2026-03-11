@@ -25,20 +25,12 @@
 #define MAX_LCD_MENU 3
 
 /**
- * @brief WiFi AP SSID and password
+ * @brief WiFi & InfluxDB credentials — loaded from credentials.h (not committed).
+ * @see credentials.h.example
  */
-#define WIFI_SSID "AtelierCreationItinerant"
-#define WIFI_PASSWORD "jeVeuxDuWifi!"
+#include "credentials.h"
 #define WIFI_TIMEOUT 5 // 10 seconds
 #define DEVICE_NAME "Victron-MPPT"
-
-/**
- * @brief InfluxDB v2 server details
- */
-#define INFLUXDB_URL "https://us-east-1-1.aws.cloud2.influxdata.com"
-#define INFLUXDB_TOKEN "QTIEjAI8p9zsaxTnBYExPLyJFJNNGrx-Dz9DU0cTa6tInggXDHX77APTGsoZ7-rXgK8JqRZw6ptSdDJaoZtL8A=="
-#define INFLUXDB_ORG "650b91508ddb9cf3"
-#define INFLUXDB_BUCKET "victron"
 #define DEVICE "SmartSolar"
 #define WRITE_PRECISION WritePrecision::MS
 #define MAX_BATCH_SIZE 20
