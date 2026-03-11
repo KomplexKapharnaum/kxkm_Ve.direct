@@ -160,8 +160,11 @@ void VeDirectFrameHandler::rxData(uint8_t inbyte) {
  * This function is called every time a new name/value is successfully parsed.  It writes the values to the temporary buffer.
  */
 void VeDirectFrameHandler::textRxEvent(char* mName, char* mValue) {
-  strcpy(tempName[frameIndex], mName);    // copy name to temporary buffer
-  strcpy(tempValue[frameIndex], mValue);  // copy value to temporary buffer
+  if (frameIndex >= frameLen) return;     // prevent buffer overrun
+  strncpy(tempName[frameIndex], mName, nameLen - 1);
+  tempName[frameIndex][nameLen - 1] = '\0';
+  strncpy(tempValue[frameIndex], mValue, valueLen - 1);
+  tempValue[frameIndex][valueLen - 1] = '\0';
   frameIndex++;
 }
 
@@ -177,14 +180,17 @@ void VeDirectFrameHandler::frameEndEvent(bool valid) {
       bool nameExists = false;
       for (int j = 0; j <= veEnd; j++) {  // compare to existing names in the public buffer
         if (strcmp(tempName[i], veName[j]) == 0) {
-          strcpy(veValue[j], tempValue[i]);  // overwrite tempValue in the public buffer
+          strncpy(veValue[j], tempValue[i], valueLen - 1);  // overwrite tempValue in the public buffer
+          veValue[j][valueLen - 1] = '\0';
           nameExists = true;
           break;
         }
       }
       if (!nameExists) {
-        strcpy(veName[veEnd], tempName[i]);    // write new Name to public buffer
-        strcpy(veValue[veEnd], tempValue[i]);  // write new Value to public buffer
+        strncpy(veName[veEnd], tempName[i], nameLen - 1);    // write new Name to public buffer
+        veName[veEnd][nameLen - 1] = '\0';
+        strncpy(veValue[veEnd], tempValue[i], valueLen - 1);  // write new Value to public buffer
+        veValue[veEnd][valueLen - 1] = '\0';
         veEnd++;                               // increment end of public buffer
         if (veEnd >= buffLen) {                // stop any buffer overrun
           veEnd = buffLen - 1;

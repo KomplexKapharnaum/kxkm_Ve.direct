@@ -15,7 +15,7 @@ void connectToWiFi()
   unsigned long wifi_time = millis();
   Serial.print("Connecting to WiFi...");
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  while (WiFi.status() != WL_CONNECTED && millis() - WIFI_TIMEOUT * 1000 >= wifi_time)
+  while (WiFi.status() != WL_CONNECTED && (millis() - wifi_time) < (unsigned long)(WIFI_TIMEOUT * 1000))
   {
     delay(500);
     Serial.print(".");
@@ -90,7 +90,7 @@ void check_influx_db()
   while (result.next() && c < 1)
   {
     Serial.println("Querying datanase OK : ");
-    data_value[16] == 1;
+    data_value[16] = 1;  // was == (comparison, not assignment!)
     CHECK_READ_DB_COUNT = UPDATE_CHK_INFLUXDB;
     c++;
   }
@@ -98,7 +98,7 @@ void check_influx_db()
   {
     CHECK_READ_DB_COUNT = 5;
     Serial.println(" No data found");
-    data_value[16] == 0;
+    data_value[16] = 0;  // was == (comparison, not assignment!)
     error_data_received++;
     if (error_data_received > 20)
     {
