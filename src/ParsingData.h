@@ -8,6 +8,8 @@
 
 void parseSerialData(String field, String value)
 {
+  // Input validation: reject empty or oversized fields
+  if (field.length() == 0 || field.length() > 32 || value.length() > 64) return;
 
   // Serial.print(field);  Serial.println("-"+value); // DEBUG ONLY
 

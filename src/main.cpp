@@ -58,6 +58,12 @@ static float data_value[20] = {};                                               
 static float data_value_old[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // Array to store data values
 static int error_data_received = 0;                                                             // Error counter for data received in query InfluxDB
 
+// Mutex protecting data_value[] / data_value_old[] shared between tasks.
+// Take with xSemaphoreTake(dataMutex, pdMS_TO_TICKS(50)) before reading or
+// writing data_value[], and release with xSemaphoreGive(dataMutex).
+// Critical sections: parseSerialData(), parseLCDData(), send_to_influxdb(), lcd updates.
+static SemaphoreHandle_t dataMutex = NULL;
+
 #include "Arduino.h"
 #include <M5Stack.h>
 #include <WiFiMulti.h>
@@ -104,9 +110,13 @@ void setup()
   // hex protocol callback
   myve.addHexCallback(&HexCallback, (void *)42);
 
+  // Initialize mutex for data_value[] thread safety
+  dataMutex = xSemaphoreCreateMutex();
+
+#warning "TLS certificate validation disabled — MITM risk. Add CA cert for production."
   // Alternatively, set insecure connection to skip server certificate validation
   // save space in flash (and RAM) by not including the certificate
-  client.setInsecure();
+  client.setInsecure(); // TODO: Replace with proper CA certificate
 
   lcd_start();
   connectToWiFi();
